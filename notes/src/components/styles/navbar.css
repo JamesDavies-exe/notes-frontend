@@ -1,0 +1,23 @@
+.nav {
+    position: sticky;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    border-bottom: 1px solid #000;
+    top: 0;
+  }
+  
+  .subnav {
+    position: sticky;
+    bottom: 0;
+    top: 60px;
+  }
+  .nav__title {
+    margin: 0px 30px;
+  }
+  .nav__item {
+    display: inline-block;
+    margin: 0px 30px;
+  }
+
