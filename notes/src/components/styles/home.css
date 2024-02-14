@@ -1,0 +1,21 @@
+*{
+    margin: 0;
+    padding: 0;
+  }
+  
+  .header{
+    display: grid;
+    place-items: center;
+    height: 90vh;
+  }
+  
+  .title p{
+    display: flex;
+    justify-content: center;
+  }
+  
+  .big{
+    font-weight: 500;
+    font-size: 190px;
+    letter-spacing: 15px;
+  }

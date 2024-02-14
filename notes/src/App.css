@@ -1,23 +1,22 @@
-*{
-  margin: 0;
-  padding: 0;
-}
-
-.header{
-  display: grid;
-  place-items: center;
-  height: 90vh;
-}
-
-.title p{
+.nav {
+  position: sticky;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  border-bottom: 1px solid #000;
+  top: 0;
 }
 
-.big{
-  font-weight: 500;
-  font-size: 190px;
-  letter-spacing: 15px;
+.subnav {
+  position: sticky;
+  bottom: 0;
+  top: 60px;
 }
-
-/* HOLA ALEJANDRA rtyuio */
+.nav__title {
+  margin: 0px 30px;
+}
+.nav__item {
+  display: inline-block;
+  margin: 0px 30px;
+}
