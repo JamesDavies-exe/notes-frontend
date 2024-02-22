@@ -1,0 +1,58 @@
+:root {
+    --primary: #212121;
+    --secondary: #ffffff;
+  }
+.new-note-card{
+    width: 60%;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 70px;
+    border-radius: 5px;
+    border:2px dashed #707070;
+    cursor: pointer;
+}
+
+.new-note-card p{
+    cursor: pointer;
+}
+
+.note-card{
+    width: 60%;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 70px;
+    border-radius: 5px;
+    background-color: var(--primary);
+    color: var(--secondary);
+    cursor: pointer;
+}
+
+.error-card{
+    width: 60%;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 70px;
+    border-radius: 5px;
+    background-color: rgba(138, 0, 0, 0.76);
+    color: white;
+    cursor: pointer;
+}
+.searchDiv{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+#search{
+    width: 50%;
+    margin: 0 auto;
+}

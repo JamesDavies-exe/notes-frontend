@@ -1,42 +1,46 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
-function SignUp() {
+import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
+function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  let navigate = useNavigate();
 
-  const sendSignUp = async (event) => {
+  const sendLogin = async (event) => {
     event.preventDefault();
     const data = { username: username, password: password };
-    window.alert(String(await post(data)));
-}
+    postLogin(data);
+  };
 
-async function post(data) {
-    return await fetch("http://localhost:8080/signup", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
+  async function postLogin(data) {
+    await fetch("http://localhost:8080/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     })
-        .then((response) => {
-            if (response.status === 409) return "User already exists";
-            if (response.ok) return "User " + data.username + " created";
-            return "Input data error";
-        })
-        .catch(() => {
-            return "Error creating user";
-        })
-}
-
+      .then((response) => response.json())
+      .then((json) => {
+        localStorage.setItem("token", json.token);
+        window.dispatchEvent(new Event("storage"));
+        return navigate("/");
+      })
+      .catch(() => {
+        window.alert("Wrong username or password");
+      });
+  }
   return (
     <>
       <div className="container" id="home">
         <div className="login-left">
           <div className="login-header">
-            <h1>Create an account</h1>
+            <h1>Log in</h1>
+            <p>
+              <Link to="/register">Or sign up if you don't have account</Link>
+            </p>
           </div>
-          <form onSubmit={sendSignUp} className="login-form" autoComplete="off">
+          <form onSubmit={sendLogin} className="login-form" autoComplete="off">
             <div className="login-content">
               <div className="form-item">
                 <label htmlFor="text">Username</label>
@@ -57,7 +61,7 @@ async function post(data) {
                   onChange={(event) => setPassword(event.target.value)}
                 />
               </div>
-              <button type="submit">Create account</button>
+              <button type="submit">Log in</button>
             </div>
           </form>
         </div>
@@ -66,4 +70,4 @@ async function post(data) {
   );
 }
 
-export default SignUp;
+export default Login;
