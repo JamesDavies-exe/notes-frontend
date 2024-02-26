@@ -1,19 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
+import './styles/myNotes.css'
 
 function NewNote(){
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [file, setFile] = useState(null);
+    const [publicity, setPublicity] = useState(false);
     let navigate = useNavigate();
     const changeTitle = (event) => {setTitle(event.target.value)};
     const changeContent = (event) => {setContent(event.target.value)};
     const changeFile = (event) => {setFile(event.target.files[0])};
+    const changePublicity = (event) => {setPublicity(event.target.value)};
+    const [tieneToken, setTieneToken] = useState(false);
+
+    useEffect(() => {
+      // Verificar si el token existe en localStorage
+      const token = localStorage.getItem('token');
+      if (token) {
+        setTieneToken(true);
+      } else {
+        setTieneToken(false);
+      }
+    }, []);
 
     const sendNote = async (event) => {
         event.preventDefault();
-        const note = { title: title, body: content, isVoiceNote: false, isPublic: true }
+        const note = { title: title, body: content, isVoiceNote: false, isPublic: publicity }
+        console.log(note);
         await post(note).then((id) => { if (file) uploadFile(id, file); })
             .then(navigate("/myNotes/"));
     }
@@ -50,8 +64,19 @@ function NewNote(){
         });
         return await response.json();
     }
-    
-    return(
+
+    if(!tieneToken){
+      return (
+        <>
+        <div className="error-card">
+          <p>Login with your account to create notes</p>
+        </div>
+        </>
+      )
+    }
+
+    if(tieneToken){
+      return(
         <>
         <div className="container" id="home">
         <div className="login-left">
@@ -88,6 +113,11 @@ function NewNote(){
                     accept="image/*" 
                     onChange={changeFile} 
                 />
+                <input type="checkbox"
+                id="public"
+                value={publicity}
+                onChange={changePublicity}
+                />
               </div>
               <button type="submit">Create note</button>
             </div>
@@ -96,6 +126,7 @@ function NewNote(){
       </div>
         </>
     )
+    }
 }
 
 export default NewNote;

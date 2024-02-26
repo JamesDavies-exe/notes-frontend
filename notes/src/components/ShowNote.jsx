@@ -49,19 +49,9 @@ function ShowNote() {
     })
       .then((response) => response.json())
       .then((response) => {
-        if (response === 0) {
-          setFileUri(null);
-        }
         console.log(response);
-        setFileUri(response[0].uri);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-  useEffect(() => {
-    if (fileUri != null) {
-      fetch("http://localhost:8080" + fileUri, {
+        console.log(response[0].uri)
+        fetch("http://localhost:8080" + response[0].uri, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -71,13 +61,18 @@ function ShowNote() {
         .then((response) => response.blob())
         .then((response) => {
           console.log(response);
-          setFileSrc(URL.createObjectURL(response).replace("blob:", ""));
+          setFileSrc(URL.createObjectURL(response));
         })
         .catch((error) => {
           console.log(error);
         });
-    }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
+  
+ 
   function deleteNote() {
     fetch("http://localhost:8080/notes/" + id, {
       method: "DELETE",
@@ -108,11 +103,11 @@ function ShowNote() {
   return (
     <>
       <div className="showNote">
-        <h1>Note</h1>
-        <p>Title: {note.title}</p>
+        <h1>{note.title}</h1>
+        <p>{note.body}</p>
         <p>Body: {note.body}</p>
         <p>Create date: {note.createdAt}</p>
-        {fileSrc == null ? "" : <img src={fileSrc} alt="" />}
+        {fileSrc == null ? "" : <img className="image" src={fileSrc} alt=""/>}
       </div>
       <button onClick={() => navigate("/modifyNote/" + note.id)}>Modify</button>
       <button onClick={deleteNote}>Delete</button>

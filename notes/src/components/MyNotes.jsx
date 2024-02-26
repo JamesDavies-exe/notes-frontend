@@ -68,7 +68,8 @@ function MyNotes() {
   return (
     <>
     <div className="searchDiv">
-    <input type="text" id="search" value={search} placeholder="Search note" onChange={(event) => setSearch(event.target.value)} />
+      <button>Sort by date</button>
+    <input type="text" id="search" value={search} placeholder="Search by title" onChange={(event) => setSearch(event.target.value)} />
     </div>
     {filteredNotes.map((note) => 
       <div onClick={() => navigate("/showNote/" + note.id)} key={note.id} className='note-card'>

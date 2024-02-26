@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect  } from 'react'
 import React from 'react';
 import './App.css'
 import Home from './components/Home.jsx'
@@ -8,8 +8,22 @@ import MyNotes from './components/MyNotes.jsx';
 import NewNote from './components/NewNote.jsx';
 import ShowNote from './components/ShowNote.jsx';
 import ModifyNote from './components/ModifyNote.jsx';
+import UserInfo from './components/UserInfo.jsx';
 import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 function App() {
+  const [tieneToken, setTieneToken] = useState(false);
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    // Verificar si el token existe en localStorage
+    const token = localStorage.getItem('token');
+    if (token) {
+      setTieneToken(true);
+      setUsername(localStorage.getItem('username'));
+    } else {
+      setTieneToken(false);
+    }
+  }, []);
 
   return (
     <>
@@ -31,7 +45,11 @@ function App() {
                   </li>
                 <div className="login">
                     <li>
+                      {tieneToken ? (
+                        <Link to="/userInfo" className="navlogin active">{username}</Link>
+                      ) : (
                         <Link to="/login" className="navlogin active">Login</Link>
+                      )}
                     </li>
                 </div>
             </ul>
@@ -44,6 +62,7 @@ function App() {
         <Route path='/register' Component={Register} />
         <Route path='/myNotes' Component={MyNotes}></Route>
         <Route path='/newNote' Component={NewNote}></Route>
+        <Route path='/userInfo' Component={UserInfo}></Route>
         <Route path='/showNote/:id' Component={ShowNote}></Route>
         <Route path='/modifyNote/:id' Component={ModifyNote}></Route>
       </Routes>

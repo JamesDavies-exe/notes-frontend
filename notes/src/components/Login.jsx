@@ -23,6 +23,7 @@ function Login() {
       .then((response) => response.json())
       .then((json) => {
         localStorage.setItem("token", json.token);
+        localStorage.setItem("username", username);
         window.dispatchEvent(new Event("storage"));
         return navigate("/");
       })
